@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, json, render_template
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
  
@@ -81,9 +81,10 @@ def recibir_mensajes(req):
                    return 0
                if "text" in messages:
                    text = messages["text"]["body"]
-                          
-       agregar_mensajes_log(json.dumps(objeto_mensaje))
-       
+                   numero = messages["from"]       
+               agregar_mensajes_log(json.dumps(text))
+           agregar_mensajes_log(json.dumps(numero))
+               
        return jsonify({'messaje':'EVENT_RECEIVED'})
     except Exception as e:
         return jsonify({'messaje':'EVENT_RECEIVED'})
