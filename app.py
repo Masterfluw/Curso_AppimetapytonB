@@ -1,9 +1,10 @@
-from flask import Flask, request, jsonify, json, render_template
+from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
- 
+import http.client
+import json
 
-app = Flask('__name__')
+app = Flask(__name__)
 
 # Configuracion de la base de datos SQLITE
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///metapython.db'
@@ -16,7 +17,7 @@ class log(db.Model):
     fecha_y_hora = db.Column(db.DateTime, default=datetime.utcnow)
     texto = db.Column(db.TEXT)
     
-# Crear tabla si no existiera
+# Crear tabla si no existiera   
 with app.app_context():
     db.create_all()
    
@@ -37,8 +38,7 @@ mensajes_log = []
 def agregar_mensajes_log(texto):
     
     mensajes_log.append(texto)
- 
-    # Guardar el mensaje en la base de datos
+# Guardar el mensaje en la base de datos
     nuevo_registro = log(texto)
     db.session.add(nuevo_registro)
     db.session.commit()
@@ -77,17 +77,65 @@ def recibir_mensajes(req):
            messages = objeto_mensaje
            if "type" in messages:
                tipo = messages ["type"]
+               
                if tipo == "interactive":
                    return 0
+               
                if "text" in messages:
                    text = messages["text"]["body"]
-                   numero = messages["from"]       
+                   numero = messages["from"]
+                          
                agregar_mensajes_log(json.dumps(text))
-           agregar_mensajes_log(json.dumps(numero))
+               agregar_mensajes_log(json.dumps(numero))
                
        return jsonify({'messaje':'EVENT_RECEIVED'})
     except Exception as e:
         return jsonify({'messaje':'EVENT_RECEIVED'})
-
+    
+    def enviar_mensajes_whatsapp(texto, number):
+        texto = texto.lower()
+        
+        if "hola" in texto:
+            data = {
+                "messaging_product" : "whatsapp", 
+                "recipient_type" : "individual",
+                "to" : "number",
+                "type" : "text",
+                "text": {
+                    "preview_url": false, 
+                    "body": "Hola ¿Como estas? Bienvenido"
+                }
+            }
+        else:
+            data = {
+                "messaging_product" : "whatsapp", 
+                "recipient_type" : "individual",
+                "to" : number,
+                "type" : "text",
+                "text": {
+                    "preview_url": false, 
+                    "body": "Hola, visita mi web fluterperu para mas informacion \n \n Por favor, ingrese un numero \n \n video de introduccion. \n hablar con fluter \n Horario de atencion \n regresar al menu"
+                }
+            }
+            
+            # Convertir en diccionario en formato JSON
+            data = json.dumps(data)
+            
+            headers = {
+                "Content-Type" : "application/jon",
+                "Auhorization" : "Bearer EAAXHYImI1ZBEBQZC6eOb2inlyZAiKcBgz320fcUukn6F15Ty2IvSZA5rQb0aNQYAPhbBfC64ZAXKGjyvMO2RZARv4zNuGPjSfe44xKgX3ojsTTQvpafQZCQWqNwuKuLC9m7TDNwQE2t2qEcXcRSZCp55b2ZC2OZCW7N6OPIhZAQU8bWBSIBjitUt4v8xEvCX98Xo170bdsPUC6hy9QuWawDw5RdNT7ZA4esXh8YZA0A9SHTTBHe3hD59gHMczyZCeoEFnUnEybHPyfjhkVK7lPjKIQz4PN"
+            }
+            
+            connection = http.client.HTTPSConnection('graph.facebook.com')
+            
+            try:
+                connection.request("POST", "/v22.0/1016468574875369/messages", data, headers)
+                response = connection.getresponse()
+                print(response.status, response.reason)
+            except Exception as e:
+                agregar_mensajes_log(json.dumps(e))
+            finally:
+                connection.close()  
+            
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080,debug=True)
