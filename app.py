@@ -95,15 +95,102 @@ def recibir_mensajes(req):
         texto = texto.lower()
         
         if "hola" in texto:
-            data = {
+            data={
                 "messaging_product" : "whatsapp", 
                 "recipient_type" : "individual",
-                "to" : "number",
-                "type" : "text",
+                "to": number,
+                "type": "text",
                 "text": {
                     "preview_url": false, 
                     "body": "Hola ¿Como estas? Bienvenido"
                 }
+            }
+        elif "1" in texto:
+            data={
+                "messaging_product" : "whatsapp", 
+                "recipient_type" : "individual",
+                "to": number,
+                "type": "text",
+                "text": {
+                    "preview_url": false, 
+                    "body": "Hola te ayudo a buscar el equipo ideal"
+                }
+            }
+        elif "2" in texto:
+            data={
+                "messaging_product" : "whatsapp", 
+                "recipient_type" : "individual",
+                "to": number,
+                "type": "location",
+                "location": {
+                "latitude": "-12.067158831865067",
+                "longitude": "-77.03377940839486",
+                "name": " Estadio naacional de Lima",
+                "Andress": " Lima Peru"
+                }                   
+            }
+        elif "3" in texto:
+            data={
+                "messaging_product" : "whatsapp", 
+                "recipient_type" : "individual",
+                "to": number,
+                "type": "document",
+                "document": {
+                "llink": "https://www.aquasystemperu.com/hidroneumaticos-serie-vav.html#&gid=1&pid=2",
+                "caption": "-catalogo de la bomba sumergible"
+                }                   
+            }
+        elif "4" in texto:
+            data={
+                "messaging_product" : "whatsapp", 
+                "recipient_type" : "individual",
+                "to": number,
+                "type": "audio",
+                "audio": {
+                "link": "https://filesamples.com/samples/audio/mp3samples1.mp3"
+            }                   
+            }
+        elif "5" in texto:
+            data={
+                "messaging_product" : "whatsapp", 
+                "to": number,
+                "text": {
+                    "preview_url" : True,
+                    "body": "introduccion al mundo de las bombas para agua¡ https://www.aquasystemperu.com/index.html"
+            }                   
+            }
+        elif "6" in texto:
+            data={
+                "messaging_product" : "whatsapp", 
+                "recipient_type" : "individual",
+                "to": number,
+                "type": "text",
+                "text": {
+                "body": "enbreve me podre en contacto contigo"
+                }                   
+            }
+        elif "7" in texto:
+            data={
+                "messaging_product" : "whatsapp", 
+                "recipient_type" : "individual",
+                "to": number,
+                "type": "text",
+                "text": {
+                "preview_url":False,
+                "body": "Horario de atencion : Lunes a sabado \n Horario 9:00 a 5:00 pm."
+               }                   
+            }
+        elif "0" in texto:
+            data={
+                "messaging_product" : "whatsapp", 
+                "recipient_type" : "individual",
+                "to": number,
+                "type": "text",
+                "text": {
+                "preview_url": False, 
+                "body": "Hola,Ingresa un numero para mas informacion \n \n 1. Informacion del curso \n 2. Ubicacion del local \n 3. enviar temario en pdf \n 4. Audio explicando curso \n 5. Video de introduccion. \n 6. Hablar con fluter \n 7. Horario de atencion \n 0. Regresar al menu"
+                }
+               }                   
             }
         else:
             data = {
@@ -112,11 +199,11 @@ def recibir_mensajes(req):
                 "to" : number,
                 "type" : "text",
                 "text": {
-                    "preview_url": false, 
-                    "body": "Hola, visita mi web fluterperu para mas informacion \n \n Por favor, ingrese un numero \n \n video de introduccion. \n hablar con fluter \n Horario de atencion \n regresar al menu"
+                    "preview_url": False, 
+                    "body": "Hola,Ingresa un numero para mas informacion \n \n 1. Informacion del curso \n 2. Ubicacion del local \n 3. enviar temario en pdf \n 4. Audio explicando curso \n 5. Video de introduccion. \n 6. Hablar con fluter \n 7. Horario de atencion \n 0. Regresar al menu"
                 }
             }
-            
+        
             # Convertir en diccionario en formato JSON
             data = json.dumps(data)
             
