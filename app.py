@@ -67,27 +67,27 @@ def verificar_token(req):
 def recibir_mensajes(req):
         
     try:
-       req = request.get_json()
-       entry = req['entry'][0] 
-       changes = entry['changes'][0]
-       value = changes['value']
-       objeto_mensaje= value['messages']
-       
-       if objeto_mensaje:
-           messages = objeto_mensaje
-           if "type" in messages:
-               tipo = messages ["type"]
-               
-               if tipo == "interactive":
-                   return 0
-               
-               if "text" in messages:
-                   text = messages["text"]["body"]
-                   numero = messages["from"]
-                                             
-                   enviar_mensajes_whatsapp(text, numero)
-               
-       return jsonify({'messaje':'EVENT_RECEIVED'})
+        req = request.get_json()
+        entry = req['entry'][0] 
+        changes = entry['changes'][0]
+        value = changes['value']
+        objeto_mensaje= value['messages']
+    
+        if objeto_mensaje:
+            messages = objeto_mensaje
+            if "type" in messages:
+                tipo = messages ["type"]
+    
+                if tipo == "interactive":
+                    return 0
+        
+                if "text" in messages:
+                    text = messages["text"]["body"]
+                    numero = messages["from"]
+            
+                enviar_mensajes_whatsapp(text, numero)
+    
+        return jsonify({'messaje':'EVENT_RECEIVED'})
     except Exception as e:
         return jsonify({'messaje':'EVENT_RECEIVED'})
     
@@ -178,7 +178,7 @@ def recibir_mensajes(req):
                 "text": {
                 "preview_url":False,
                 "body": "Horario de atencion : Lunes a sabado \n Horario 9:00 a 5:00 pm."
-               }                   
+            }                   
             }
         elif "0" in texto:
             data={
@@ -190,8 +190,7 @@ def recibir_mensajes(req):
                 "preview_url": False, 
                 "body": "Hola,Ingresa un numero para mas informacion \n \n 1. Informacion del curso \n 2. Ubicacion del local \n 3. enviar temario en pdf \n 4. Audio explicando curso \n 5. Video de introduccion. \n 6. Hablar con fluter \n 7. Horario de atencion \n 0. Regresar al menu"
                 }
-               }                   
-            }
+            }                   
         else:
             data = {
                 "messaging_product" : "whatsapp", 
