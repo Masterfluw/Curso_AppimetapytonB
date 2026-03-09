@@ -84,8 +84,8 @@ def recibir_mensajes(req):
                if "text" in messages:
                    text = messages["text"]["body"]
                    numero = messages["from"]
-                          
-                  enviar_mensajes_whatsapp(text, numero)
+                                             
+                   enviar_mensajes_whatsapp(text, numero)
                
        return jsonify({'messaje':'EVENT_RECEIVED'})
     except Exception as e:
