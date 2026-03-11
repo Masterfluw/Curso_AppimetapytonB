@@ -251,7 +251,7 @@ def recibir_mensajes(req):
                     "body": "Muchas gracias por aceptar."
                 }
             }
-         elif "btnno" in texto:
+        elif "btnno" in texto:
             data={
                 "messaging_product" : "whatsapp", 
                 "recipient_type" : "individual",
@@ -262,7 +262,7 @@ def recibir_mensajes(req):
                     "body": "Es una Lastima."
                 }
             }
-         elif "btntalvez" in texto:
+        elif "btntalvez" in texto:
             data={
                 "messaging_product" : "whatsapp", 
                 "recipient_type" : "individual",
