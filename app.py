@@ -14,7 +14,7 @@ db = SQLAlchemy (app)
 # modelo de la tabla llamado log (colocar nombre)
 class log(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    fecha_y_hora = db.Column(db.DateTime, default=datetime.utcnow)
+    fecha_y_hora = db.Column(db.DateTime, default=datetime.now)
     texto = db.Column(db.TEXT)
     
 # Crear tabla si no existiera   
@@ -278,18 +278,19 @@ def recibir_mensajes(req):
         elif "lista" in texto:
             data={
                 "messaging_product" : "whatsapp", 
-                "recipient_type" : "individual",
                 "to" : number,
                 "type" : "interactive",
                 "interactive": {
                     "type": "list", 
                     "body": {
                         "text": "Selecciona Alguna Opcion"
-                    },"footer": {
+                    },
+                    "footer": {
                         "text": "selecciones una de las opciones para poder ayudarte"
-                    },"action": {
+                    },
+                    "action": {
                         "button": "Ver Opciones",
-                        "secctions": [
+                        "sections": [
                             {
                                 "title":"Compra y Venta",
                                 "rows":[
@@ -297,10 +298,25 @@ def recibir_mensajes(req):
                                         "id": "btncompra", 
                                         "title":"Comprar",
                                         "description": " Compra los mejores articulos de tecnologia"
-                                    }, {
+                                    },
+                                    {
                                          "id": "btnvender", 
                                         "title":"vender",
-                                        "description": " Compra los mejores articulos de tecnologia"
+                                        "description": " Vende lo que no usas"
+                                    }
+                                ]
+                            },{
+                                 "title":"Distribucion y Entrega",
+                                "rows":[
+                                    {
+                                        "id": "btndireccion", 
+                                        "title":"Local",
+                                        "description": " puedes visitar nuestro local"
+                                    },
+                                    {
+                                         "id": "btnentrega", 
+                                        "title":"Entrega",
+                                        "description": " La entrega se realizan todos los dias"
                                     }
                                 ]
                             }
