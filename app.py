@@ -82,12 +82,14 @@ def recibir_mensajes(req):
                 agregar_mensajes_log(json.dumps(messages))
     
                 if tipo == "interactive":
-                    tipo_interactivo=messages["interactive"]["type"]["id"]
+                    tipo_interactivo=messages["interactive"]["type"]
                     
                     if tipo_interactivo == "button_reply":
-                        text = messages ["interactive"]["button_reply"]
+                        text = messages ["interactive"]["button_reply"]["id"]
                         numero = messages["from"]
-        
+                        
+                        enviar_mensajes_whatsapp(text,numero)
+                    
                 if "text" in messages:
                     text = messages["text"]["body"]
                     numero = messages["from"]
@@ -271,6 +273,39 @@ def recibir_mensajes(req):
                 "text": {
                     "preview_url": False, 
                     "body": "Estare a la espera."
+                }
+            }
+        elif "lista" in texto:
+            data={
+                "messaging_product" : "whatsapp", 
+                "recipient_type" : "individual",
+                "to" : number,
+                "type" : "interactive",
+                "interactive": {
+                    "type": "list", 
+                    "body": {
+                        "text": "Selecciona Alguna Opcion"
+                    },"footer": {
+                        "text": "selecciones una de las opciones para poder ayudarte"
+                    },"action": {
+                        "button": "Ver Opciones",
+                        "secctions": [
+                            {
+                                "title":"Compra y Venta",
+                                "rows":[
+                                    {
+                                        "id": "btncompra", 
+                                        "title":"Comprar",
+                                        "description": " Compra los mejores articulos de tecnologia"
+                                    }, {
+                                         "id": "btnvender", 
+                                        "title":"vender",
+                                        "description": " Compra los mejores articulos de tecnologia"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 }
             }                 
         else:
