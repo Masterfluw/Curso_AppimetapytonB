@@ -64,6 +64,8 @@ def verificar_token(req):
     else:
         return jsonify({'error': 'token invalido'}), 401
   
+def enviar_mensajes_whatsapp(texto, number):
+        texto = texto.lower()
 def recibir_mensajes(req):
         
     try:
@@ -89,11 +91,17 @@ def recibir_mensajes(req):
                         numero = messages["from"]
                         
                         enviar_mensajes_whatsapp(text,numero)
+                        
+                    elif tipo_interactivo == "list_reply":
+                        text = messages ["interactive"]["list_reply"]["id"]
+                        numero = messages["from"]
+                        
+                    enviar_mensajes_whatsapp(text,numero)
                     
                 if "text" in messages:
                     text = messages["text"]["body"]
                     numero = messages["from"]
-            
+                                
                     enviar_mensajes_whatsapp(text,numero)
                     
                     # agregar log en la BD
@@ -103,9 +111,6 @@ def recibir_mensajes(req):
     except Exception as e:
         return jsonify({'messaje':'EVENT_RECEIVED'})
     
-    def enviar_mensajes_whatsapp(texto, number):
-        texto = texto.lower()
-        
         if "hola" in texto:
             data={
                 "messaging_product" : "whatsapp", 
@@ -124,7 +129,7 @@ def recibir_mensajes(req):
                 "to": number,
                 "type": "text",
                 "text": {
-                    "preview_url": false, 
+                    "preview_url": False, 
                     "body": "Hola te ayudo a buscar el equipo ideal"
                 }
             }
@@ -276,8 +281,8 @@ def recibir_mensajes(req):
                 }
             }
         elif "lista" in texto:
-            data={
-                "messaging_product" : "whatsapp", 
+            data={  
+                "messaging_product":"whatsapp",
                 "to" : number,
                 "type" : "interactive",
                 "interactive": {
@@ -323,7 +328,29 @@ def recibir_mensajes(req):
                         ]
                     }
                 }
-            }                 
+            }
+        elif "btncompra" in texto:
+            data={
+                "messaging_product" : "whatsapp", 
+                "recipient_type" : "individual",
+                "to": number,
+                "type": "text",
+                "text": {
+                    "preview_url": False, 
+                    "body": "Los mejores articulos top en oferta"
+                }
+            }
+        elif "btnvender" in texto:
+            data={
+                "messaging_product" : "whatsapp", 
+                "recipient_type" : "individual",
+                "to": number,
+                "type": "text",
+                "text": {
+                    "preview_url": False, 
+                    "body": "Excelente eleccion."
+                }
+            }                    
         else:
             data = {
                 "messaging_product" : "whatsapp", 
