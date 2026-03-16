@@ -525,3 +525,28 @@ curl --location -g '{{Domain}}/v1/messages' \
 
 # borrar eliminar webhook
 {{Domain}}/v1/configs/webhook
+
+
+
+# curl -i -X POST `
+  https://graph.facebook.com/v22.0/1016468574875369/messages `
+  'Authorization: Bearer EAAXHYImI1ZBEBQxeN4CvZB5QV9PokDC5bHsmFpVfImZCMNe7lc5ZBBAPjsLmruQQqNRcSfT2zcq08gfYSLTXegeOX55fTGpo6D45vH4Ekwki7jPZCVQ09xOkw46ahK8fq4gtTVCuSSO0LjvlNzYBcaKhjKOrMgXs1VYywjofMI2n8gQU2qWC6Thbc9BmlZCKPjN28aLZCx5hpUOd8vdSRCnQvZAifrAtJGZBTQDOCIQzZCejDzGNT6ZCyus4iy3348WItbRY6qX3xhQogF2HHXZB2M2w' `
+  'Content-Type: application/json' `
+  '{ \"messaging_product\": \"whatsapp\", \"to\": \"51941964894\", \"type\": \"template\", \"template\": { \"name\": \"hello_world\", \"language\": { \"code\": \"en_US\" } } }'
+
+# ruta del proyecto git hub
+
+https://github.com/Masterfluw/Curso_appimetapytonb.git
+# repositorio  or create a new repository on the command line  --  O crear un nuevo repositorio desde la línea de comandos
+ echo "# Curso_appimetapytonc" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/Masterfluw/Curso_appimetapytonc.git
+git push -u origin main
+
+# or push an existing repository from the command line --  o enviar un repositorio existente desde la línea de comandos
+git remote add origin https://github.com/Masterfluw/Curso_appimetapytonc.git
+git branch -M main
+git push -u origin main
