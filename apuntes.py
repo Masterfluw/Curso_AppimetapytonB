@@ -538,15 +538,56 @@ curl --location -g '{{Domain}}/v1/messages' \
 
 https://github.com/Masterfluw/Curso_appimetapytonb.git
 # repositorio  or create a new repository on the command line  --  O crear un nuevo repositorio desde la línea de comandos
- echo "# Curso_appimetapytonc" >> README.md
+ echo "# Curso_appimetapytonb" >> README.md
 git init
 git add README.md
 git commit -m "first commit"
 git branch -M main
-git remote add origin https://github.com/Masterfluw/Curso_appimetapytonc.git
+git remote add origin https://github.com/Masterfluw/Curso_appimetapytonb.git
 git push -u origin main
 
 # or push an existing repository from the command line --  o enviar un repositorio existente desde la línea de comandos
 git remote add origin https://github.com/Masterfluw/Curso_appimetapytonc.git
 git branch -M main
 git push -u origin main
+
+# webhook
+{
+    "object":"whatsapp_business_account",
+    "entry":[
+    {
+        "id":"102290129340398",
+        "changes":[
+        {
+        "value":{ 
+        "messaging_product":"whatsapp",
+        "metadata":{
+            "display_phone_number":"15550783881",
+            "phone_number_id":"106540352242922"
+            },
+            "contacts":[
+                {
+                    "profile":{
+                        "name":"Sheena Nelson"
+                        },
+                        "wa_id":"16505551234"
+                        }
+                        ],
+                        "messages":[
+                            {
+                                "from":"16505551234",
+                                "id""wamid.HBgLMTY1MDM4Nzk0MzkVAgASGBQzQTRBNjU5OUFFRTAzODEwMTQ0RgA=",
+                                "timestamp": "1749416383",
+                                "type": "text"
+                                "text":{
+                                    "body":"Doesitcomeinanothercolor?"
+                                    }
+                            }
+                                    ]
+                },
+                                    "field":"messages"
+        }
+            ]
+    }
+    ]
+}
