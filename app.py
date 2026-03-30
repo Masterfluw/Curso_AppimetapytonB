@@ -14,7 +14,7 @@ db = SQLAlchemy (app)
 # modelo de la tabla llamado log (colocar nombre)
 class log(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    fecha_y_hora = db.Column(db.DateTime, default=datetime.now)
+    fecha_y_hora = db.Column(db.DateTime, default=datetime.now())
     texto = db.Column(db.TEXT)
     
 # Crear tabla si no existiera   
